@@ -1,0 +1,2 @@
+Inst	n	m	Mejor Cmax	Promedio Cmax(10rep)	Std Dev	NEH	Promedio Tiempo(s)	RPD UB(%)	RPD NEH(%)
+tai20_5_5.fsp	20	5	1210	1210.6	0.916515	1228	0.0325098	1.25523	-1.4658
