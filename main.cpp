@@ -99,19 +99,36 @@ int main(int argc, char* argv[]) {
   // ---------------------------------------------------------
   // 5. GUARDAR EN ARCHIVOS .TXT
   // ---------------------------------------------------------
-  string inst_name = file_path;
+string inst_name = file_path;
   size_t pos = inst_name.find_last_of("/\\");
   if(pos != string::npos) inst_name = inst_name.substr(pos+1);
 
   ofstream out_tabla("tabla_resultados.txt", ios::app);
   out_tabla.seekp(0, ios::end);
   if (out_tabla.tellp() == 0) { 
-    out_tabla << "Inst\tn\tm\tMejor Cmax\tPromedio Cmax(10rep)\tStd Dev\tNEH\tPromedio Tiempo(s)\tRPD UB(%)\tRPD NEH(%)\n";
+    out_tabla << left << setw(18) << "Inst" 
+              << right << setw(4) << "n" 
+              << setw(4) << "m" 
+              << setw(12) << "Mejor Cmax" 
+              << setw(22) << "Promedio Cmax(10rep)" 
+              << setw(12) << "Std Dev" 
+              << setw(8) << "NEH" 
+              << setw(20) << "Promedio Tiempo(s)" 
+              << setw(12) << "RPD UB(%)" 
+              << setw(12) << "RPD NEH(%)\n";
   }
-  out_tabla << inst_name << "\t" << problema.getN() << "\t" << problema.getM() << "\t"
-            << mejor_cmax_ag << "\t" << promedio_cmax << "\t" << std_dev << "\t"
-            << res_neh.mejor_makespan << "\t" << promedio_tiempo << "\t"
-            << rpd_ub << "\t" << rpd_neh << "\n";
+  
+  out_tabla << fixed << setprecision(5);
+  out_tabla << left << setw(18) << inst_name 
+            << right << setw(4) << problema.getN() 
+            << setw(4) << problema.getM() 
+            << setw(12) << mejor_cmax_ag 
+            << setw(22) << promedio_cmax 
+            << setw(12) << std_dev 
+            << setw(8) << res_neh.mejor_makespan 
+            << setw(20) << promedio_tiempo 
+            << setw(12) << rpd_ub 
+            << setw(12) << rpd_neh << "\n";
   out_tabla.close();
 
   ofstream out_conv("convergencia.txt");
@@ -124,9 +141,9 @@ int main(int argc, char* argv[]) {
   // ---------------------------------------------------------
   // 6. IMPRIMIR RESUMEN DE LAS 10 REPETICIONES
   // ---------------------------------------------------------
-  cout << "\n=================================== RESUMEN DE RESULTADOS (10 REP) =======================\n";
+  cout << "\n=================================== RESUMEN DE RESULTADOS (10 REP) ==============================\n";
   cout << "Inst   |  n |  m | Mejor Cmax | Promedio(10) | Std Dev |  NEH | Prom Tiempo(s) | RPD UB | RPD NEH\n";
-  cout << "------------------------------------------------------------------------------------------\n";
+  cout << "-------------------------------------------------------------------------------------------------\n";
   cout << left << setw(7) << inst_name.substr(0,7) << "| " 
        << right << setw(2) << problema.getN() << " | " 
        << setw(2) << problema.getM() << " | " 
@@ -137,7 +154,7 @@ int main(int argc, char* argv[]) {
        << setw(14) << promedio_tiempo << " | " 
        << setw(5) << rpd_ub << "% | " 
        << setw(6) << rpd_neh << "%\n";
-  cout << "==========================================================================================\n";
+  cout << "=================================================================================================\n";
   cout << ">> Los datos se han guardado en 'tabla_resultados.txt'.\n";
   cout << ">> Los datos de la grafica estan en 'convergencia.txt'.\n\n";
 
