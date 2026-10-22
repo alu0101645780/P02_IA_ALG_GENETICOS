@@ -37,11 +37,11 @@ int main(int argc, char* argv[]) {
 
   Algoritmos solver_base(problema, semilla_base);
 
-  // 1. Ejecutar NEH y Búsqueda Aleatoria
+  // Ejecutar NEH y Búsqueda Aleatoria
   ResultadoEjecucion res_neh = solver_base.heuristica_NEH();
   ResultadoEjecucion res_ba = solver_base.busqueda_aleatoria(eval_max);
 
-  // 2. Realizar las 10 repeticiones del AG
+  // Realizar las 10 repeticiones del AG
   int repeticiones = 10;
   int mejor_cmax_ag = 1e9;
   double suma_cmax = 0.0;
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  // 3. Cálculos estadísticos
+  // Cálculos estadísticos
   double promedio_cmax = suma_cmax / repeticiones;
   double promedio_tiempo = suma_tiempos / repeticiones;
   
@@ -81,9 +81,7 @@ int main(int argc, char* argv[]) {
   double rpd_ub = problema.calcularRPD(mejor_cmax_ag); 
   double rpd_neh = 100.0 * (mejor_cmax_ag - res_neh.mejor_makespan) / static_cast<double>(res_neh.mejor_makespan);
 
-  // ---------------------------------------------------------
-  // 4. IMPRIMIR TABLA ORIGINAL (La que tenías bien)
-  // ---------------------------------------------------------
+  // Imprimir tabla con algoritmos
   cout << fixed << setprecision(2);
   cout << "======================================================================\n";
   cout << "Instancia: " << file_path << " (" << problema.getN() << " trabajos x " << problema.getM() << " maquinas)\n";
@@ -96,9 +94,7 @@ int main(int argc, char* argv[]) {
   cout << left << setw(22) << "Algoritmo Genetico" << "| " << right << setw(8) << mejor_cmax_ag << " | " << rpd_ub << "%\n";
   cout << "======================================================================\n";
 
-  // ---------------------------------------------------------
-  // 5. GUARDAR EN ARCHIVOS .TXT
-  // ---------------------------------------------------------
+  // Guardar en archivos .txt
 string inst_name = file_path;
   size_t pos = inst_name.find_last_of("/\\");
   if(pos != string::npos) inst_name = inst_name.substr(pos+1);
@@ -131,16 +127,14 @@ string inst_name = file_path;
             << setw(12) << rpd_neh << "\n";
   out_tabla.close();
 
-  ofstream out_conv("convergencia.txt");
-  out_conv << "Evaluaciones\tMejor Cmax\n";
+ofstream out_conv("convergencia.txt");
+  out_conv << left << setw(15) << "Evaluaciones" << right << setw(12) << "Mejor Cmax\n";
   for (const auto& punto : mejor_curva) {
-    out_conv << punto.evaluacion << "\t" << punto.mejor_makespan << "\n";
+    out_conv << left << setw(15) << punto.evaluacion << right << setw(12) << punto.mejor_makespan << "\n";
   }
   out_conv.close();
 
-  // ---------------------------------------------------------
-  // 6. IMPRIMIR RESUMEN DE LAS 10 REPETICIONES
-  // ---------------------------------------------------------
+  // Imprimir resumen de las 10 repeticiones
   cout << "\n=================================== RESUMEN DE RESULTADOS (10 REP) ==============================\n";
   cout << "Inst   |  n |  m | Mejor Cmax | Promedio(10) | Std Dev |  NEH | Prom Tiempo(s) | RPD UB | RPD NEH\n";
   cout << "-------------------------------------------------------------------------------------------------\n";

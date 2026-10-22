@@ -27,7 +27,7 @@ make
 ```
 
 ### Ejecución
-Ejecutar el programa con la instancia por defecto:
+Ejecutar el programa con la instancia por defecto (instances/tai20_5_5.fsp):
 
 ```bash
 ./pfsp_ga
